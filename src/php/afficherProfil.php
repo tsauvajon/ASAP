@@ -2,9 +2,9 @@
 	include_once "connectionBDD.php";
 ?>      
 <?php
-function afficherCours($coursid){
+function afficherProfil($idutil){
 	$bdd = connectionBDD();
-	$query = "CALL GetCours('" . $coursid . "')";
+	$query = "CALL GetUtilisateur('" . $idutil . "')";
 	$res = $bdd->query($query);
 	
 	if ($res->num_rows)
@@ -14,5 +14,5 @@ function afficherCours($coursid){
 	}
 	return null;
 }
-//echo afficherCours (1);
+//echo afficherProfil (1);
 ?>

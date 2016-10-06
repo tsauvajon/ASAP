@@ -14,5 +14,5 @@ function editerCours($idcours, $debut, $fin, $intitule, $description){
 	}
 	return null;
 }
-editerCours (2, '2016-10-18 06:33:21', '2016-10-18 08:33:21', 'cours de php', 'créé par le code');
+//editerCours (2, '2016-10-18 06:33:21', '2016-10-18 08:33:21', 'cours de php', 'créé par le code');
 ?>
