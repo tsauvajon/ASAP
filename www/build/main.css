@@ -21094,10 +21094,14 @@ sub {
 
 #main-menu .item-block.item .input-wrapper ion-label ion-icon {
   color: #fbb03f;
-  font-size: 1.8em;
+  font-size: 2em;
   padding-right: 10%;
-  top: 3px;
-  position: relative;
+}
+
+#main-menu .item-block.item .input-wrapper ion-label p {
+  font-size: 1em;
+  display: inline-block;
+  color: #a3a3a3;
 }
 
 #main-menu ion-item-divider.item {
