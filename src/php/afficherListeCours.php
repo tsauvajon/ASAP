@@ -20,21 +20,19 @@ function afficherCoursCrees(){
 function afficherDemandesCours(){
 	$bdd = connectionBDD();
 	$query = "CALL CoursSansTuteur()";
-	$res = $bdd->query($query);
+	//$res = $bdd->query($query);
+	$res = mysqli_query($bdd, $query);	
 	
-	/*$ligne = 0;
 	$cours = array();
 	
-	while ($row = $res->fetch_assoc())
+	while ($row = mysqli_fetch_assoc($res))
 	{
-		var_dump($row);
-		$cours[$ligne++] = $row;
-		
+		$cours[] = $row;	
 	}
 	
 	var_dump($cours);
 
-	return json_encode($cours);*/
+	return json_encode($cours);
 	
 	/*
 	$res->data_seek(0);
@@ -51,6 +49,6 @@ function afficherDemandesCours(){
 
 	return json_encode($cours);*/
 }
-echo afficherCoursCrees ();
+//echo afficherCoursCrees ();
 echo afficherDemandesCours ();
 ?>
