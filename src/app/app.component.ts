@@ -16,7 +16,7 @@ export class MyApp {
 
   rootPage: any = ProfilePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, iconname: string}>;
 
   constructor(public platform: Platform) {
     this.initializeApp();
