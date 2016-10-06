@@ -1,0 +1,5 @@
+webservices :
+
+afficherProfil.php?idutil=[id utilisateur]
+
+inscrireAuCours.php?type=[tuteur ou eleve]&idutil=[id utilisateur]&idcours=[id cours]

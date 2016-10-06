@@ -29,7 +29,11 @@ function inscrireEleve($idutil, $idcours){
 }
 
 // perso.montpellier.epsi.fr/~antoine.porquet/inscrireAuCours.php?type=Tuteur&idutil=1&idcours=1
-
-//echo inscrireEleve (1,1);
-//echo inscrireEleve (2,1);
+$type = $_GET["type"];
+$cours = intval($_GET["idcours"]);
+$util = intval($_GET["idutil"]);
+if ($type == "tuteur")
+	echo inscrireTuteur($util, $cours);
+else if ($type == "eleve")
+	echo inscrireEleve($util, $cours);
 ?>

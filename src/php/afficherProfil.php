@@ -14,5 +14,5 @@ function afficherProfil($idutil){
 	}
 	return null;
 }
-//echo afficherProfil (1);
+echo afficherProfil (intval($_GET["idutil"]));
 ?>

@@ -6,13 +6,8 @@ function afficherCours($coursid){
 	$bdd = connectionBDD();
 	$query = "CALL GetCours('" . $coursid . "')";
 	$res = $bdd->query($query);
-	
-	if ($res->num_rows)
-	{
-		$res->data_seek($row_no);
-		return json_encode($res->fetch_assoc());
-	}
-	return null;
+
+	return json_encode($res->fetch_assoc());
 }
-//echo afficherCours (1);
+echo afficherCours (intval($_GET["idcours"]));
 ?>
