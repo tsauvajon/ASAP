@@ -3,13 +3,21 @@
 ?>      
 <?php
 function connection($login, $mdp){
+	$bdd = connectionBDD();
+	$sql = "CALL Connecter(" . $login . ", " . $mdp . ")";
+	echo $sql . "\n";
+	$res = $bdd->query($sql);
+		
+	//$sql = "select * from cours";
+	//$res = $bdd->query($sql);
 	
-	//$res = $bdd->query("CALL Connecter(" . $login . ", " . $mdp . ")");
-	$res = $bdd->query("Select * From cours");
-	
+	//echo "edfezfes";
+	//$res = null;
 	var_dump($res);
-	var_dump($res->fetch_assoc());
+
+	echo json_encode($res.fetch_assoc());
 	
-	return json_encode($resultFetch);
+	//return json_encode($res);
 }
+connection ("Lemurien","abka34070");
 ?>
