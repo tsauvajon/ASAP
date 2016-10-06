@@ -1,5 +1,5 @@
 <?php	
-	include_once(connectionBDD.php);
+	include_once "connectionBDD.php";
 ?>      
 <?php
 function getCours($idcours){
