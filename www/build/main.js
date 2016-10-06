@@ -76369,6 +76369,54 @@ var CoursePage = (function () {
 }());
 
 /* ion-compiler */
+var __decorate$110 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$5 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var CreateCoursePage = (function () {
+    function CreateCoursePage(navCtrl) {
+        this.navCtrl = navCtrl;
+    }
+    CreateCoursePage = __decorate$110([
+        Component({
+            selector: 'CreateCoursePage', template: /* ion-inline-template */ "<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle start>\n            <ion-icon name=\"menu\"></ion-icon>\n        </button>\n        <ion-title>\n            Cr\u00E9ation Cours\n        </ion-title>\n        <ion-buttons end>\n            <button ion-button (click)=\"openModal()\">\n                <ion-icon name=\"options\"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <h3>Ionic profile</h3>\n\n    <p>\n        If you get lost, the <a href=\"http://ionicframework.com/docs/v2\">docs</a> will show you the way.\n    </p>\n\n    <button ion-button secondary menuToggle>Toggle Menu</button>\n\n    <ion-item>\n        <ion-label>Start Time</ion-label>\n        <ion-datetime displayFormat=\"h:mm A\" pickerFormat=\"h mm A\"></ion-datetime>\n    </ion-item>\n</ion-content>"
+        }), 
+        __metadata$5('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object])
+    ], CreateCoursePage);
+    return CreateCoursePage;
+    var _a;
+}());
+
+/* ion-compiler */
+var __decorate$111 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$6 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var AskCoursePage = (function () {
+    function AskCoursePage(navCtrl) {
+        this.navCtrl = navCtrl;
+    }
+    AskCoursePage = __decorate$111([
+        Component({
+            selector: 'AskCoursePage', template: /* ion-inline-template */ "<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle start>\n            <ion-icon name=\"menu\"></ion-icon>\n        </button>\n        <ion-title>\n            Demande de Cours\n        </ion-title>\n        <ion-buttons end>\n            <button ion-button (click)=\"openModal()\">\n                <ion-icon name=\"options\"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <h3>Ionic profile</h3>\n\n    <p>\n        If you get lost, the <a href=\"http://ionicframework.com/docs/v2\">docs</a> will show you the way.\n    </p>\n\n    <button ion-button secondary menuToggle>Toggle Menu</button>\n\n    <ion-item>\n        <ion-label>Start Time</ion-label>\n        <ion-datetime displayFormat=\"h:mm A\" pickerFormat=\"h mm A\"></ion-datetime>\n    </ion-item>\n</ion-content>"
+        }), 
+        __metadata$6('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object])
+    ], AskCoursePage);
+    return AskCoursePage;
+    var _a;
+}());
+
+/* ion-compiler */
 var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -76393,6 +76441,14 @@ var MyApp = (function () {
                 component: CoursePage,
                 iconname: 'ios-bookmarks'
             },
+            { title: 'Créer un cours',
+                component: CreateCoursePage,
+                iconname: 'ios-contacts'
+            },
+            { title: 'Demander un cours',
+                component: AskCoursePage,
+                iconname: 'ios-add-circle'
+            },
         ];
     }
     MyApp.prototype.initializeApp = function () {
@@ -76412,7 +76468,7 @@ var MyApp = (function () {
         __metadata$1('design:type', (typeof (_a = typeof Nav !== 'undefined' && Nav) === 'function' && _a) || Object)
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate$1([
-        Component({ template: /* ion-inline-template */ "<ion-menu [content]=\"content\">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <button menuClose ion-item *ngFor=\"let p of pages\" (click)=\"openPage(p)\">\n                <ion-icon name=\"{{p.iconname}}\"></ion-icon>{{p.title}}\n            </button>\n        </ion-list>\n    </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->\n<ion-nav [root]=\"rootPage\" #content swipeBackEnabled=\"false\"></ion-nav>"
+        Component({ template: /* ion-inline-template */ "<ion-menu [content]=\"content\">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list id=\"main-menu\">\n            <button menuClose ion-item *ngFor=\"let p of pages\" (click)=\"openPage(p)\">\n                <ion-icon name=\"{{p.iconname}}\"></ion-icon>{{p.title}}\n            </button>\n            <ion-item-divider></ion-item-divider>\n        </ion-list>\n    </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->\n<ion-nav [root]=\"rootPage\" #content swipeBackEnabled=\"false\"></ion-nav>"
         }), 
         __metadata$1('design:paramtypes', [(typeof (_b = typeof Platform !== 'undefined' && Platform) === 'function' && _b) || Object])
     ], MyApp);
@@ -76438,7 +76494,9 @@ var AppModule = (function () {
             declarations: [
                 MyApp,
                 ProfilePage,
-                CoursePage
+                CoursePage,
+                CreateCoursePage,
+                AskCoursePage
             ],
             imports: [
                 IonicModule.forRoot(MyApp)
@@ -76447,7 +76505,9 @@ var AppModule = (function () {
             entryComponents: [
                 MyApp,
                 ProfilePage,
-                CoursePage
+                CoursePage,
+                CreateCoursePage,
+                AskCoursePage
             ],
             providers: []
         }), 

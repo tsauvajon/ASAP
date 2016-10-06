@@ -21084,6 +21084,42 @@ sub {
   }
 }
 
+#main-menu .item-block.item {
+  padding: 0px;
+}
+
+#main-menu .item-block.item .input-wrapper ion-label {
+  margin-left: 10%;
+}
+
+#main-menu .item-block.item .input-wrapper ion-label ion-icon {
+  color: #fbb03f;
+  font-size: 1.8em;
+  padding-right: 10%;
+  top: 3px;
+  position: relative;
+}
+
+ion-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 90px 1px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+ion-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 90px 1px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
 ion-title {
   position: absolute;
   top: 0;

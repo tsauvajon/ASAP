@@ -4,6 +4,8 @@ import { StatusBar } from 'ionic-native';
 
 import { ProfilePage } from '../pages/ProfilePage/ProfilePage';
 import { CoursePage } from '../pages/CoursePage/CoursePage';
+import { CreateCoursePage } from '../pages/CreateCoursePage/CreateCoursePage';
+import { AskCoursePage } from '../pages/AskCoursePage/AskCoursePage';
 
 
 @Component({
@@ -28,6 +30,14 @@ export class MyApp {
       { title: 'Cours', 
       component: CoursePage, 
       iconname: 'ios-bookmarks' 
+      },
+      { title: 'Créer un cours', 
+      component: CreateCoursePage, 
+      iconname: 'ios-contacts' 
+      },
+      { title: 'Demander un cours', 
+      component: AskCoursePage, 
+      iconname: 'ios-add-circle' 
       },
     ];
 
