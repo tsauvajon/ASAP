@@ -2,12 +2,17 @@
 	include_once "connectionBDD.php";
 ?>      
 <?php
-function getCours($idcours){
-	$stmt = $bdd->prepare("CALL GetCours(?)");
-    $stmt->bindParam(':p_idcours', $idcours, PDO::PARAM_STR);
-    $stmt->execute();
-    //echo "La procédure a retourné : $return_value";
+function afficherCours($coursid){
+	$bdd = connectionBDD();
+	$query = "CALL GetCours('" . $coursid . "')";
+	$res = $bdd->query($query);
 	
-	return json_encode($return_value);
+	if ($res->num_rows)
+	{
+		$res->data_seek($row_no);
+		return json_encode($res->fetch_assoc());
+	}
+	return null;
 }
+echo afficherCours (1);
 ?>
