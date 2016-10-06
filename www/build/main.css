@@ -21100,6 +21100,10 @@ sub {
   position: relative;
 }
 
+#main-menu ion-item-divider.item {
+  background-color: #eeeeee;
+}
+
 ion-title {
   position: absolute;
   top: 0;

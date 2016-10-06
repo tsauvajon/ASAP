@@ -31,12 +31,12 @@ export class MyApp {
       component: CoursePage, 
       iconname: 'ios-bookmarks' 
       },
-      { title: 'Créer un cours', 
-      component: CreateCoursePage, 
-      iconname: 'ios-contacts' 
-      },
       { title: 'Demander un cours', 
       component: AskCoursePage, 
+      iconname: 'ios-contacts' 
+      },
+      { title: 'Créer un cours', 
+      component: CreateCoursePage, 
       iconname: 'ios-add-circle' 
       },
     ];
