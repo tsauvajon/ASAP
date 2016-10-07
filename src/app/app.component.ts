@@ -4,17 +4,20 @@ import { StatusBar } from 'ionic-native';
 
 import { ProfilePage } from '../pages/ProfilePage/ProfilePage';
 import { CoursePage } from '../pages/CoursePage/CoursePage';
+import { CreateCoursePage } from '../pages/CreateCoursePage/CreateCoursePage';
+import { AskCoursePage } from '../pages/AskCoursePage/AskCoursePage';
 
 
 @Component({
   templateUrl: 'app.html'
 })
+
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = ProfilePage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, iconname: string}>;
 
   constructor(public platform: Platform) {
     this.initializeApp();
@@ -28,6 +31,14 @@ export class MyApp {
       { title: 'Cours', 
       component: CoursePage, 
       iconname: 'ios-bookmarks' 
+      },
+      { title: 'Demander un cours', 
+      component: AskCoursePage, 
+      iconname: 'ios-contacts' 
+      },
+      { title: 'Créer un cours', 
+      component: CreateCoursePage, 
+      iconname: 'ios-add-circle' 
       },
     ];
 

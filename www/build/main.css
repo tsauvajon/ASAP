@@ -21084,6 +21084,30 @@ sub {
   }
 }
 
+#main-menu .item-block.item {
+  padding: 0px;
+}
+
+#main-menu .item-block.item .input-wrapper ion-label {
+  margin-left: 10%;
+}
+
+#main-menu .item-block.item .input-wrapper ion-label ion-icon {
+  color: #fbb03f;
+  font-size: 2em;
+  padding-right: 10%;
+}
+
+#main-menu .item-block.item .input-wrapper ion-label p {
+  font-size: 1em;
+  display: inline-block;
+  color: #a3a3a3;
+}
+
+#main-menu ion-item-divider.item {
+  background-color: #eeeeee;
+}
+
 ion-title {
   position: absolute;
   top: 0;
@@ -21102,4 +21126,47 @@ ion-title {
   width: 100%;
   height: 100%;
   text-align: center;
+}
+
+ion-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 90px 1px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#create-cours-navbar .save-button,
+#create-cours-navbar .cancel-button {
+  background-color: #dddddd;
+  color: #676767;
+}
+
+#create-cours-navbar .save-button ion-icon {
+  color: green;
+}
+
+#create-cours-navbar .cancel-button ion-icon {
+  color: red;
+}
+
+#profile-navbar ion-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 90px 1px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#profile-navbar .edit-button {
+  background-color: #cccccc;
+  color: #676767;
+}
+
+.profile-picture img {
+  border-radius: 50%;
 }

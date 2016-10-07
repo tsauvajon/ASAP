@@ -2,13 +2,22 @@
     <ion-header>
         <ion-toolbar>
             <ion-title>Menu</ion-title>
+            <button ion-button menuToggle end>
+                <ion-icon name="md-close"></ion-icon>
+            </button>
         </ion-toolbar>
     </ion-header>
 
     <ion-content>
-        <ion-list>
+        <ion-list id="main-menu">
             <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-                <ion-icon name="{{p.iconname}}"></ion-icon>{{p.title}}
+                <ion-icon name="{{p.iconname}}"></ion-icon>
+                <p>{{p.title}}</p>
+            </button>
+            <ion-item-divider></ion-item-divider>
+            <button ion-item>
+                <ion-icon name="ios-unlock"></ion-icon>
+                <p>Déconnexion</p>
             </button>
         </ion-list>
     </ion-content>

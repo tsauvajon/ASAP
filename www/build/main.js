@@ -76320,6 +76320,138 @@ setTimeout(function () {
     }
 }, DEVICE_READY_TIMEOUT);
 
+var __extends$140 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Subscriber_1$4 = Subscriber_1$2;
+/**
+ * Applies a given `project` function to each value emitted by the source
+ * Observable, and emits the resulting values as an Observable.
+ *
+ * <span class="informal">Like [Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map),
+ * it passes each source value through a transformation function to get
+ * corresponding output values.</span>
+ *
+ * <img src="./img/map.png" width="100%">
+ *
+ * Similar to the well known `Array.prototype.map` function, this operator
+ * applies a projection to each value and emits that projection in the output
+ * Observable.
+ *
+ * @example <caption>Map every every click to the clientX position of that click</caption>
+ * var clicks = Rx.Observable.fromEvent(document, 'click');
+ * var positions = clicks.map(ev => ev.clientX);
+ * positions.subscribe(x => console.log(x));
+ *
+ * @see {@link mapTo}
+ * @see {@link pluck}
+ *
+ * @param {function(value: T, index: number): R} project The function to apply
+ * to each `value` emitted by the source Observable. The `index` parameter is
+ * the number `i` for the i-th emission that has happened since the
+ * subscription, starting from the number `0`.
+ * @param {any} [thisArg] An optional argument to define what `this` is in the
+ * `project` function.
+ * @return {Observable<R>} An Observable that emits the values from the source
+ * Observable transformed by the given `project` function.
+ * @method map
+ * @owner Observable
+ */
+function map$2(project, thisArg) {
+    if (typeof project !== 'function') {
+        throw new TypeError('argument is not a function. Are you looking for `mapTo()`?');
+    }
+    return this.lift(new MapOperator(project, thisArg));
+}
+var map_2 = map$2;
+var MapOperator = (function () {
+    function MapOperator(project, thisArg) {
+        this.project = project;
+        this.thisArg = thisArg;
+    }
+    MapOperator.prototype.call = function (subscriber, source) {
+        return source._subscribe(new MapSubscriber(subscriber, this.project, this.thisArg));
+    };
+    return MapOperator;
+}());
+var MapOperator_1 = MapOperator;
+/**
+ * We need this JSDoc comment for affecting ESDoc.
+ * @ignore
+ * @extends {Ignored}
+ */
+var MapSubscriber = (function (_super) {
+    __extends$140(MapSubscriber, _super);
+    function MapSubscriber(destination, project, thisArg) {
+        _super.call(this, destination);
+        this.project = project;
+        this.count = 0;
+        this.thisArg = thisArg || this;
+    }
+    // NOTE: This looks unoptimized, but it's actually purposefully NOT
+    // using try/catch optimizations.
+    MapSubscriber.prototype._next = function (value) {
+        var result;
+        try {
+            result = this.project.call(this.thisArg, value, this.count++);
+        }
+        catch (err) {
+            this.destination.error(err);
+            return;
+        }
+        this.destination.next(result);
+    };
+    return MapSubscriber;
+}(Subscriber_1$4.Subscriber));
+
+var map_1$1 = {
+	map: map_2,
+	MapOperator: MapOperator_1
+};
+
+var Observable_1$4 = Observable_1$1;
+var map_1 = map_1$1;
+Observable_1$4.Observable.prototype.map = map_1.map;
+
+/* ion-compiler */
+var __decorate$108 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$3 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var Utilisateurs = (function () {
+    function Utilisateurs(http) {
+        this.http = http;
+        this.Url = 'http://perso.montpellier.epsi.fr/~antoine.porquet/afficherProfil.php?idutil=1';
+        this.Dataprovider = {
+            id_util: 1,
+            nom: "BAECHLER",
+            prenom: "Guillaume",
+            tel: "06 07 08 09 10",
+            mail: "guillaume.baechler@epsi.fr",
+            campus: "EPSI MONTPELLIER",
+            promo: "B3"
+        };
+    }
+    Utilisateurs.prototype.load = function () {
+        /* return this.http.get(`${this.Url}`)
+         .map(res => <Utilisateur[]>res.json());*/
+        return this.Dataprovider;
+    };
+    Utilisateurs = __decorate$108([
+        Injectable(), 
+        __metadata$3('design:paramtypes', [(typeof (_a = typeof Http !== 'undefined' && Http) === 'function' && _a) || Object])
+    ], Utilisateurs);
+    return Utilisateurs;
+    var _a;
+}());
+
 /* ion-compiler */
 var __decorate$107 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -76331,40 +76463,161 @@ var __metadata$2 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var ProfilePage = (function () {
-    function ProfilePage(navCtrl) {
+    function ProfilePage(navCtrl, utilisateurs) {
         this.navCtrl = navCtrl;
+        this.utilisateurs = utilisateurs;
+        this.sEditable = false;
+        this.User = null;
+        this.User = utilisateurs.load();
     }
+    ProfilePage.prototype.editPage = function () {
+        this.sEditable = !this.sEditable;
+    };
+    ProfilePage.prototype.donePage = function () {
+        this.editPage();
+    };
     ProfilePage = __decorate$107([
         Component({
-            selector: 'ProfilePage', template: /* ion-inline-template */ "<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle start>\n            <ion-icon name=\"menu\"></ion-icon>\n        </button>\n        <ion-title>\n            Profil\n        </ion-title>\n        <ion-buttons end>\n            <button ion-button (click)=\"openModal()\">\n                <ion-icon name=\"options\"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <h3>Ionic profile</h3>\n\n    <p>\n        If you get lost, the <a href=\"http://ionicframework.com/docs/v2\">docs</a> will show you the way.\n    </p>\n\n    <button ion-button secondary menuToggle>Toggle Menu</button>\n\n    <ion-item>\n        <ion-label>Start Time</ion-label>\n        <ion-datetime displayFormat=\"h:mm A\" pickerFormat=\"h mm A\"></ion-datetime>\n    </ion-item>\n</ion-content>"
+            selector: 'ProfilePage', template: /* ion-inline-template */ "<ion-header>\n    <ion-navbar id=\"profile-navbar\">\n        <button ion-button menuToggle start>\n            <ion-icon name=\"menu\"></ion-icon>\n        </button>\n        <ion-title>\n            Profil\n        </ion-title>\n        <ion-buttons end>\n            <button *ngIf='!sEditable' icon-left ion-button solid class=\"edit-button\" (click)=\"editPage()\">\n                <ion-icon name=\"md-create\"></ion-icon>\n                <p>Edit</p>\n            </button>\n            <button *ngIf='sEditable' icon-left ion-button solid class=\"edit-button\" (click)=\"donePage()\">\n                <ion-icon name=\"ios-checkmark-circle-outline\"></ion-icon>\n                <p>Done</p>\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-row>\n        <ion-col width-50 offset-25>\n            <div class=\"profile-picture\">\n                <img src=\"/assets/chatonmignon.png\">\n            </div>\n        </ion-col>\n    </ion-row>\n    <ion-row *ngIf='!sEditable'>\n        <ion-card>\n            <ion-item>\n                <ion-icon name=\"ios-contact\" item-left large></ion-icon>\n                <h2>{{User.nom}} {{User.prenom}}</h2>\n                <p>20 ans</p>\n            </ion-item>\n            <ion-item>\n                <ion-icon name=\"ios-school\" item-left large></ion-icon>\n                <h2>{{User.campus}}</h2>\n                <p>{{User.promo}}</p>\n            </ion-item>\n            <ion-item>\n                <ion-icon name=\"ios-call\" item-left large></ion-icon>\n                <p>{{User.tel}}</p>\n            </ion-item>\n            <ion-item>\n                <ion-icon name=\"md-at\" item-left large></ion-icon>\n                <p>{{User.mail}}</p>\n            </ion-item>\n        </ion-card>\n    </ion-row>\n    <ion-row *ngIf='sEditable'>\n        <ion-card>\n            <ion-item>\n                <ion-label floating>Pr\u00E9nom</ion-label>\n                <ion-input type=\"text\" [(ngModel)]=\"User.prenom\" value=\"{{User.prenom}}\"></ion-input>\n            </ion-item>\n            <ion-item>\n                <ion-label floating>Nom</ion-label>\n                <ion-input type=\"text\" [(ngModel)]=\"User.nom\" value=\"{{User.nom}}\"></ion-input>\n            </ion-item>\n            <ion-item>\n                <ion-label floating>Campus</ion-label>\n                <ion-input type=\"text\" [(ngModel)]=\"User.campus\" value=\"{{User.campus}}\"></ion-input>\n            </ion-item>\n            <ion-item>\n                <ion-label floating>Promo</ion-label>\n                <ion-input type=\"text\" [(ngModel)]=\"User.promo\" value=\"{{User.promo}}\"></ion-input>\n            </ion-item>\n            <ion-item>\n                <ion-label floating>T\u00E9l\u00E9phone</ion-label>\n                <ion-input type=\"tel\" [(ngModel)]=\"User.tel\" value=\"{{User.tel}}\"></ion-input>\n            </ion-item>\n            <ion-item>\n                <ion-label floating>Mail</ion-label>\n                <ion-input type=\"email\" [(ngModel)]=\"User.mail\" value=\"{{User.mail}}\"></ion-input>\n            </ion-item>\n        </ion-card>\n    </ion-row>\n</ion-content>"
         }), 
-        __metadata$2('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object])
+        __metadata$2('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object, (typeof (_b = typeof Utilisateurs !== 'undefined' && Utilisateurs) === 'function' && _b) || Object])
     ], ProfilePage);
     return ProfilePage;
-    var _a;
+    var _a, _b;
 }());
 
 /* ion-compiler */
-var __decorate$109 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+var __decorate$111 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata$4 = (undefined && undefined.__metadata) || function (k, v) {
+var __metadata$6 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var Cours = (function () {
+    function Cours(http) {
+        this.http = http;
+        this.Url = '';
+        this.Dataprovider = [{
+                id: 1,
+                nom: "Le CSS pour les nuls",
+                date: "10/10/2016",
+                heuredep: "9",
+                mindep: "30",
+                heurefin: "10",
+                minfin: "00"
+            }];
+    }
+    Cours.prototype.load = function () {
+        /* return this.http.get(`${this.Url}`)
+         .map(res => <Cours[]>res.json());*/
+        return this.Dataprovider;
+    };
+    Cours.prototype.add = function (newCours) {
+        this.Dataprovider[this.Dataprovider.length] = {
+            id: (this.Dataprovider.length),
+            nom: newCours.titre,
+            date: newCours.date,
+            heuredep: newCours.heuredep,
+            mindep: newCours.mindep,
+            heurefin: newCours.heurefin,
+            minfin: newCours.minfin
+        };
+        return this.Dataprovider;
+    };
+    Cours = __decorate$111([
+        Injectable(), 
+        __metadata$6('design:paramtypes', [(typeof (_a = typeof Http !== 'undefined' && Http) === 'function' && _a) || Object])
+    ], Cours);
+    return Cours;
+    var _a;
+}());
+
+/* ion-compiler */
+var __decorate$110 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$5 = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var CoursePage = (function () {
-    function CoursePage(navCtrl) {
+    function CoursePage(navCtrl, cours) {
         this.navCtrl = navCtrl;
+        this.cours = cours;
+        this.cours = [];
+        var aCours = cours.load();
+        this.cours = aCours;
     }
-    CoursePage = __decorate$109([
+    CoursePage = __decorate$110([
         Component({
-            selector: 'CoursePage', template: /* ion-inline-template */ "<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle start>\n            <ion-icon name=\"menu\"></ion-icon>\n        </button>\n        <ion-title>\n            Cours\n        </ion-title>\n        <ion-buttons end>\n            <button ion-button (click)=\"openModal()\">\n                <ion-icon name=\"options\"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <h3>Ionic profile</h3>\n\n    <p>\n        If you get lost, the <a href=\"http://ionicframework.com/docs/v2\">docs</a> will show you the way.\n    </p>\n\n    <button ion-button secondary menuToggle>Toggle Menu</button>\n\n    <ion-item>\n        <ion-label>Start Time</ion-label>\n        <ion-datetime displayFormat=\"h:mm A\" pickerFormat=\"h mm A\"></ion-datetime>\n    </ion-item>\n</ion-content>"
+            selector: 'CoursePage', template: /* ion-inline-template */ "<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle start>\n            <ion-icon name=\"menu\"></ion-icon>\n        </button>\n        <ion-title>\n            Cours\n        </ion-title>\n        <ion-buttons end>\n        </ion-buttons>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-item *ngFor=\"let c of cours\">\n        <ion-card>\n            <ion-card-content>\n                <p>{{c.nom}}</p>\n            </ion-card-content>\n\n            <ion-row>\n                <ion-col center text-center>\n                    <ion-note>\n                        Le {{c.date}} de {{c.heuredep}}h{{c.mindep}} \u00E0 {{c.heurefin}}h{{c.minfin}}\n                    </ion-note>\n                </ion-col>\n            </ion-row>\n        </ion-card>\n    </ion-item>\n</ion-content>"
         }), 
-        __metadata$4('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object])
+        __metadata$5('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object, (typeof (_b = typeof Cours !== 'undefined' && Cours) === 'function' && _b) || Object])
     ], CoursePage);
     return CoursePage;
+    var _a, _b;
+}());
+
+/* ion-compiler */
+var __decorate$112 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$7 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var CreateCoursePage = (function () {
+    function CreateCoursePage(navCtrl, cours) {
+        this.navCtrl = navCtrl;
+        this.cours = cours;
+        this.newCours = {};
+        this.cours = cours;
+    }
+    CreateCoursePage.prototype.addCours = function () {
+        console.log(this.newCours);
+        var x = this.cours.add(this.newCours);
+        this.navCtrl.setRoot(CoursePage);
+    };
+    CreateCoursePage.prototype.cancelAdding = function () {
+    };
+    CreateCoursePage = __decorate$112([
+        Component({
+            selector: 'CreateCoursePage', template: /* ion-inline-template */ "<ion-header>\n    <ion-navbar id=\"create-cours-navbar\">\n        <button ion-button menuToggle start>\n            <ion-icon name=\"menu\"></ion-icon>\n        </button>\n        <ion-title>\n            Cr\u00E9ation Cours\n        </ion-title>\n        <ion-buttons end>\n            <button icon-left ion-button solid class=\"save-button\" (click)=\"addCours()\">\n                <ion-icon name=\"ios-checkmark-circle-outline\"></ion-icon>\n                <p>Save</p>\n            </button>\n            <button icon-left ion-button solid class=\"cancel-button\" (click)=\"cancelAdding()\">\n                <ion-icon name=\"ios-close-circle-outline\"></ion-icon>\n                <p>Cancel</p>\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <ion-card>\n        <ion-item>\n            <ion-label floating>Titre</ion-label>\n            <ion-input type=\"text\" [(ngModel)]=\"newCours.titre\"></ion-input>\n        </ion-item>\n        <ion-item>\n            <ion-label floating>Date</ion-label>\n            <ion-datetime displayFormat=\"DD/MM/YYYY\" [(ngModel)]=\"newCours.date\"></ion-datetime>\n        </ion-item>\n        <ion-item>\n            <ion-label>Heure de d\u00E9but : {{newCours.heuredep}}h{{newCours.mindep}}</ion-label>\n            <ion-range min=\"00\" max=\"24\" [(ngModel)]=\"newCours.heuredep\" color=\"secondary\">\n                <ion-label range-left>00</ion-label>\n                <ion-label range-right>24</ion-label>\n            </ion-range>\n            <ion-range min=\"00\" max=\"60\" step=\"5\" [(ngModel)]=\"newCours.mindep\" color=\"secondary\">\n                <ion-label range-left>00</ion-label>\n                <ion-label range-right>55</ion-label>\n            </ion-range>\n        </ion-item>\n        <ion-item>\n            <ion-label>Heure de fin : {{newCours.heurefin}}h{{newCours.minfin}}</ion-label>\n            <ion-range min=\"00\" max=\"24\" [(ngModel)]=\"newCours.heurefin\" color=\"secondary\">\n                <ion-label range-left>00</ion-label>\n                <ion-label range-right>24</ion-label>\n            </ion-range>\n            <ion-range min=\"00\" max=\"60\" step=\"5\" [(ngModel)]=\"newCours.minfin\" color=\"secondary\">\n                <ion-label range-left>00</ion-label>\n                <ion-label range-right>55</ion-label>\n            </ion-range>\n        </ion-item>\n\n    </ion-card>\n</ion-content>"
+        }), 
+        __metadata$7('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object, (typeof (_b = typeof Cours !== 'undefined' && Cours) === 'function' && _b) || Object])
+    ], CreateCoursePage);
+    return CreateCoursePage;
+    var _a, _b;
+}());
+
+/* ion-compiler */
+var __decorate$113 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata$8 = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var AskCoursePage = (function () {
+    function AskCoursePage(navCtrl) {
+        this.navCtrl = navCtrl;
+    }
+    AskCoursePage = __decorate$113([
+        Component({
+            selector: 'AskCoursePage', template: /* ion-inline-template */ "<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle start>\n            <ion-icon name=\"menu\"></ion-icon>\n        </button>\n        <ion-title>\n            Demande de Cours\n        </ion-title>\n        <ion-buttons end>\n            <button ion-button>\n                <ion-icon name=\"options\"></ion-icon>\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>"
+        }), 
+        __metadata$8('design:paramtypes', [(typeof (_a = typeof NavController !== 'undefined' && NavController) === 'function' && _a) || Object])
+    ], AskCoursePage);
+    return AskCoursePage;
     var _a;
 }());
 
@@ -76393,6 +76646,14 @@ var MyApp = (function () {
                 component: CoursePage,
                 iconname: 'ios-bookmarks'
             },
+            { title: 'Demander un cours',
+                component: AskCoursePage,
+                iconname: 'ios-contacts'
+            },
+            { title: 'Créer un cours',
+                component: CreateCoursePage,
+                iconname: 'ios-add-circle'
+            },
         ];
     }
     MyApp.prototype.initializeApp = function () {
@@ -76412,7 +76673,7 @@ var MyApp = (function () {
         __metadata$1('design:type', (typeof (_a = typeof Nav !== 'undefined' && Nav) === 'function' && _a) || Object)
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate$1([
-        Component({ template: /* ion-inline-template */ "<ion-menu [content]=\"content\">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <button menuClose ion-item *ngFor=\"let p of pages\" (click)=\"openPage(p)\">\n                <ion-icon name=\"{{p.iconname}}\"></ion-icon>{{p.title}}\n            </button>\n        </ion-list>\n    </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->\n<ion-nav [root]=\"rootPage\" #content swipeBackEnabled=\"false\"></ion-nav>"
+        Component({ template: /* ion-inline-template */ "<ion-menu [content]=\"content\">\n    <ion-header>\n        <ion-toolbar>\n            <ion-title>Menu</ion-title>\n            <button ion-button menuToggle end>\n                <ion-icon name=\"md-close\"></ion-icon>\n            </button>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list id=\"main-menu\">\n            <button menuClose ion-item *ngFor=\"let p of pages\" (click)=\"openPage(p)\">\n                <ion-icon name=\"{{p.iconname}}\"></ion-icon>\n                <p>{{p.title}}</p>\n            </button>\n            <ion-item-divider></ion-item-divider>\n            <button ion-item>\n                <ion-icon name=\"ios-unlock\"></ion-icon>\n                <p>D\u00E9connexion</p>\n            </button>\n        </ion-list>\n    </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->\n<ion-nav [root]=\"rootPage\" #content swipeBackEnabled=\"false\"></ion-nav>"
         }), 
         __metadata$1('design:paramtypes', [(typeof (_b = typeof Platform !== 'undefined' && Platform) === 'function' && _b) || Object])
     ], MyApp);
@@ -76438,7 +76699,9 @@ var AppModule = (function () {
             declarations: [
                 MyApp,
                 ProfilePage,
-                CoursePage
+                CoursePage,
+                CreateCoursePage,
+                AskCoursePage
             ],
             imports: [
                 IonicModule.forRoot(MyApp)
@@ -76447,9 +76710,11 @@ var AppModule = (function () {
             entryComponents: [
                 MyApp,
                 ProfilePage,
-                CoursePage
+                CoursePage,
+                CreateCoursePage,
+                AskCoursePage
             ],
-            providers: []
+            providers: [Utilisateurs, Cours]
         }), 
         __metadata$$1('design:paramtypes', [])
     ], AppModule);

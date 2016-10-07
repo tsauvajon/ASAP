@@ -7,24 +7,24 @@
             Cours
         </ion-title>
         <ion-buttons end>
-            <button ion-button (click)="openModal()">
-                <ion-icon name="options"></ion-icon>
-            </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-    <h3>Ionic profile</h3>
+    <ion-item *ngFor="let c of cours">
+        <ion-card>
+            <ion-card-content>
+                <p>{{c.nom}}</p>
+            </ion-card-content>
 
-    <p>
-        If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-    </p>
-
-    <button ion-button secondary menuToggle>Toggle Menu</button>
-
-    <ion-item>
-        <ion-label>Start Time</ion-label>
-        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"></ion-datetime>
+            <ion-row>
+                <ion-col center text-center>
+                    <ion-note>
+                        Le {{c.date}} de {{c.heuredep}}h{{c.mindep}} à {{c.heurefin}}h{{c.minfin}}
+                    </ion-note>
+                </ion-col>
+            </ion-row>
+        </ion-card>
     </ion-item>
 </ion-content>

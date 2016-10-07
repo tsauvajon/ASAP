@@ -3,12 +3,18 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { ProfilePage } from '../pages/ProfilePage/ProfilePage';
 import { CoursePage } from '../pages/CoursePage/CoursePage';
+import { CreateCoursePage } from '../pages/CreateCoursePage/CreateCoursePage';
+import { AskCoursePage } from '../pages/AskCoursePage/AskCoursePage';
+import { Utilisateurs } from '../providers/Utilisateurs';
+import { Cours } from '../providers/Cours';
 
-@NgModule({
+@NgModule({ 
   declarations: [
     MyApp,
     ProfilePage,
-    CoursePage
+    CoursePage,
+    CreateCoursePage,
+    AskCoursePage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -17,8 +23,10 @@ import { CoursePage } from '../pages/CoursePage/CoursePage';
   entryComponents: [
     MyApp,
     ProfilePage,
-    CoursePage
+    CoursePage,
+    CreateCoursePage,
+    AskCoursePage
   ],
-  providers: []
+  providers: [Utilisateurs, Cours]
 })
 export class AppModule {}
