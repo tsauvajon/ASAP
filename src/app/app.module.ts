@@ -5,8 +5,10 @@ import { ProfilePage } from '../pages/ProfilePage/ProfilePage';
 import { CoursePage } from '../pages/CoursePage/CoursePage';
 import { CreateCoursePage } from '../pages/CreateCoursePage/CreateCoursePage';
 import { AskCoursePage } from '../pages/AskCoursePage/AskCoursePage';
+import { Utilisateurs } from '../providers/Utilisateurs';
+import { Cours } from '../providers/Cours';
 
-@NgModule({
+@NgModule({ 
   declarations: [
     MyApp,
     ProfilePage,
@@ -25,6 +27,6 @@ import { AskCoursePage } from '../pages/AskCoursePage/AskCoursePage';
     CreateCoursePage,
     AskCoursePage
   ],
-  providers: []
+  providers: [Utilisateurs, Cours]
 })
 export class AppModule {}

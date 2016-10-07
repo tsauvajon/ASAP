@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar id="profile-navbar">
         <button ion-button menuToggle start>
             <ion-icon name="menu"></ion-icon>
         </button>
@@ -7,24 +7,74 @@
             Profil
         </ion-title>
         <ion-buttons end>
-            <button ion-button (click)="openModal()">
-                <ion-icon name="options"></ion-icon>
+            <button *ngIf='!sEditable' icon-left ion-button solid class="edit-button" (click)="editPage()">
+                <ion-icon name="md-create"></ion-icon>
+                <p>Edit</p>
+            </button>
+            <button *ngIf='sEditable' icon-left ion-button solid class="edit-button" (click)="donePage()">
+                <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+                <p>Done</p>
             </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-    <h3>Ionic profile</h3>
-
-    <p>
-        If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-    </p>
-
-    <button ion-button secondary menuToggle>Toggle Menu</button>
-
-    <ion-item>
-        <ion-label>Start Time</ion-label>
-        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"></ion-datetime>
-    </ion-item>
+    <ion-row>
+        <ion-col width-50 offset-25>
+            <div class="profile-picture">
+                <img src="/assets/chatonmignon.png">
+            </div>
+        </ion-col>
+    </ion-row>
+    <ion-row *ngIf='!sEditable'>
+        <ion-card>
+            <ion-item>
+                <ion-icon name="ios-contact" item-left large></ion-icon>
+                <h2>{{User.nom}} {{User.prenom}}</h2>
+                <p>20 ans</p>
+            </ion-item>
+            <ion-item>
+                <ion-icon name="ios-school" item-left large></ion-icon>
+                <h2>{{User.campus}}</h2>
+                <p>{{User.promo}}</p>
+            </ion-item>
+            <ion-item>
+                <ion-icon name="ios-call" item-left large></ion-icon>
+                <p>{{User.tel}}</p>
+            </ion-item>
+            <ion-item>
+                <ion-icon name="md-at" item-left large></ion-icon>
+                <p>{{User.mail}}</p>
+            </ion-item>
+        </ion-card>
+    </ion-row>
+    <ion-row *ngIf='sEditable'>
+        <ion-card>
+            <ion-item>
+                <ion-label floating>Prénom</ion-label>
+                <ion-input type="text" [(ngModel)]="User.prenom" value="{{User.prenom}}"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Nom</ion-label>
+                <ion-input type="text" [(ngModel)]="User.nom" value="{{User.nom}}"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Campus</ion-label>
+                <ion-input type="text" [(ngModel)]="User.campus" value="{{User.campus}}"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Promo</ion-label>
+                <ion-input type="text" [(ngModel)]="User.promo" value="{{User.promo}}"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Téléphone</ion-label>
+                <ion-input type="tel" [(ngModel)]="User.tel" value="{{User.tel}}"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Mail</ion-label>
+                <ion-input type="email" [(ngModel)]="User.mail" value="{{User.mail}}"></ion-input>
+            </ion-item>
+        </ion-card>
+    </ion-row>
 </ion-content>

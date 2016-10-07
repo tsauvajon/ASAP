@@ -1,4 +1,4 @@
-ion-title {
+#profile-navbar ion-title {
     position: absolute;
     top: 0;
     left: 0;
@@ -6,4 +6,19 @@ ion-title {
     width: 100%;
     height: 100%;
     text-align: center;
+}
+
+#profile-navbar {
+    .edit-button {
+        background-color: #cccccc;
+        color: #676767;
+        ion-icon {}
+        p {}
+    }
+}
+
+.profile-picture {
+    img {
+        border-radius: 50%;
+    }
 }
