@@ -1,0 +1,56 @@
+<ion-header>
+    <ion-navbar id="create-cours-navbar">
+        <button ion-button menuToggle start>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>
+            Création Cours
+        </ion-title>
+        <ion-buttons end>
+            <button icon-left ion-button solid class="save-button" (click)="addCours()">
+                <ion-icon name="ios-checkmark-circle-outline"></ion-icon>
+                <p>Save</p>
+            </button>
+            <button icon-left ion-button solid class="cancel-button" (click)="cancelAdding()">
+                <ion-icon name="ios-close-circle-outline"></ion-icon>
+                <p>Cancel</p>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-card>
+        <ion-item>
+            <ion-label floating>Titre</ion-label>
+            <ion-input type="text" [(ngModel)]="newCours.titre"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Date</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="newCours.date"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>Heure de début : {{newCours.heuredep}}h{{newCours.mindep}}</ion-label>
+            <ion-range min="00" max="24" [(ngModel)]="newCours.heuredep" color="secondary">
+                <ion-label range-left>00</ion-label>
+                <ion-label range-right>24</ion-label>
+            </ion-range>
+            <ion-range min="00" max="60" step="5" [(ngModel)]="newCours.mindep" color="secondary">
+                <ion-label range-left>00</ion-label>
+                <ion-label range-right>55</ion-label>
+            </ion-range>
+        </ion-item>
+        <ion-item>
+            <ion-label>Heure de fin : {{newCours.heurefin}}h{{newCours.minfin}}</ion-label>
+            <ion-range min="00" max="24" [(ngModel)]="newCours.heurefin" color="secondary">
+                <ion-label range-left>00</ion-label>
+                <ion-label range-right>24</ion-label>
+            </ion-range>
+            <ion-range min="00" max="60" step="5" [(ngModel)]="newCours.minfin" color="secondary">
+                <ion-label range-left>00</ion-label>
+                <ion-label range-right>55</ion-label>
+            </ion-range>
+        </ion-item>
+
+    </ion-card>
+</ion-content>
