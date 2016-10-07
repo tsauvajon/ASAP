@@ -14,5 +14,9 @@ function creerCours($debut, $fin, $intitule, $description){
 	}
 	return null;
 }
-//creerCours ('2016-10-18 06:33:21', '2016-10-18 08:33:21', 'cours de php', 'créé par le code');
+$debut = $_POST["debut"];
+$fin = $_POST["fin"];
+$titre = $_POST["titre"];
+$desc = $_POST["desc"];
+creerCours ($debut, $fin, $titre, $fin);
 ?>

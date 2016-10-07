@@ -5,3 +5,9 @@ afficherProfil.php?idutil=[id utilisateur]
 afficherCours.php?idcours=[id cours]
 
 inscrireAuCours.php?type=[tuteur ou eleve]&idutil=[id utilisateur]&idcours=[id cours]
+
+creerCours.php
+POST : debut, fin, titre, desc
+
+editerCours.php
+POST : id, debut, fin, titre, desc

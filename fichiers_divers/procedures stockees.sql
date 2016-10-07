@@ -111,3 +111,14 @@
 		Where id_util = p_idutil;
 	End|
 	Delimiter ;
+	Delimiter |
+	/* editer un cours */
+	Drop Procedure If Exists EditerProfil|
+	Delimiter |
+	Create Procedure EditerProfil (In p_idutil Int, In p_debut DateTime, In p_fin DateTime, In p_intitule Varchar(255))
+	Begin
+	Update cours 
+	Set horaire_debut = p_debut, horaire_fin = p_fin, intitule = p_intitule, description = p_description
+	Where id_cours = p_idcours;
+	End|
+	Delimiter ;

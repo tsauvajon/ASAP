@@ -14,5 +14,10 @@ function editerCours($idcours, $debut, $fin, $intitule, $description){
 	}
 	return null;
 }
-//editerCours (2, '2016-10-18 06:33:21', '2016-10-18 08:33:21', 'cours de php', 'créé par le code');
+$id = $_POST["id"]
+$debut = $_POST["debut"];
+$fin = $_POST["fin"];
+$titre = $_POST["titre"];
+$desc = $_POST["desc"];
+editerCours ($id, $debut, $fin, $titre, $fin);
 ?>
